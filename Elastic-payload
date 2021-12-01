@@ -1,0 +1,15 @@
+# This is just the payload for Elastic search rest api
+
+{
+  "query": {
+    "bool": {
+      "must": [         
+        { "match":  { "message": "expected message part" }},
+      ],
+      "filter": [
+        { "term":  { "environment": "dv" }},
+        { "range": { "@timestamp": { "gte": "2020-11-23" }}}
+      ]
+    }
+  }
+}
