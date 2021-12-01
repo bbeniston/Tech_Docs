@@ -1,0 +1,69 @@
+Installation of JMeter:
+Install Java:
+
+It requires JVM 8+. We can download the latest version of Java SE Development Kit (JDK) from https://www.oracle.com/java/technologies/downloads/
+
+Download JMeter:
+
+Download JMeter from http://jmeter.apache.org/download_jmeter.cgi
+
+Install JMeter:
+
+Unzip it and copy it to the desired directory.
+
+Launch JMeter:
+
+Double click on bin/jmeter.bat file to open JMeter GUI.
+
+To run JMeter in command line mode use this example: jmeter -n -t testPlan.jmx - l log.jtl -H 127.0.0.1 -P 8000
+
+Test Using JMeter:
+Open an existing Test Plan:
+
+We can open a ".jmx" file to open the existing test plan.
+
+Create Tests:
+
+Right Click "Test Plan" → Add Thread Group (Add → Threads → Thread Group)
+No. of Threads - No. of users to simulate
+Ramp-up Period - The time JMeter takes to start all the given no. of threads. (10 threads with 20 sec ramp-up period means every 2 sec one thread gets started)
+Loop Count - No. of times to execute the test
+Right Click "Thread Group" → Add Http Request Defaults / Http Header Manager / User Defined Variables (Add → Config Element → <ConfigType>)
+Http Header Manager could be personalized for every Http Request
+The config element "Http Request Defaults" helps us to set default api url, port etc.
+The config element "User Defined Variables" helps us to configure dynamic values to be used for the inputs
+The config element "CSV Data Set Config" helps us to test the same api with different inputs (per thread)
+Right Click "Thread Group" → Add Http Request (Add → Sampler → Http Request)
+Right Click "Thread Group" → Add Simple Controller(Add → Logic Controller → Simple Controller)
+This could be used to categorize the Http Requests
+Right Click "Thread Group" → Add Constant Timer (Add → Timer → Constant Timer)
+Pauses between the test executions could be managed using timers
+Right Click "Thread Group" or "Http Request" → Add Response/Json Assertion (Add → Assertions → <AssertionType>)
+Json Assertion Example for array and object: $.documentData[:1].employerFullName.hasValue
+Right Click "Thread Group" → Add View Result Tree (Add → Listener → <ResultType>)
+Various reports could be configured from the Listener option
+
+
+Run Tests:
+
+Click on Run icon to run the tests. Once completed, the results could be seen in the Result/Reports added.
+
+These tests would succeed based on the successful response of the apis and also the results of assertions.
+
+
+
+Results/Reports:
+
+Immediate results could be seen through the listeners which is configured for the thread group.
+
+Right Click "Thread Group" → Add View Result Tree (Add → Listener → <ResultType>)
+Various reports could be configured from the Listener option
+Provide "Write Results to File" field with the "path/fileName.csv" value. This csv report would get generated when the test is executed.
+We can also generate HTML Dashboard and graphs through the below option:
+
+Tools → Generate Html Report
+
+Results file = Any csv file generated through listeners (as mentioned above: "path/fileName.csv")
+user.properties file = reportgenerator.properties (in bin folder)
+Output directory = Any empty directory
+Once the Html Report is generated successfully, open the index.html file in a browser.
