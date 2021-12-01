@@ -1,0 +1,14 @@
+Installation:
+
+Open the command prompt
+Execute: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
+Restart the command prompt
+Execute: livingdoc --version
+
+Report Generation:
+
+Open the command prompt
+Execute: cd C:/<workspace-path>/<project-path>/bin/Debug/netcoreapp3.1
+Execute: livingdoc test-assembly <project-name>.dll -t TestExecution.json
+Open the generated html file in the browser
+Note: Generate the report only after executing the tests.
