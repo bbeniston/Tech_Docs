@@ -1,0 +1,112 @@
+This article shows how to install Jest and remove Karma in Angular.
+
+Jest is a Javascript unit testing framework used with the frontend programing languages. It helps the developer to create, run and structure tests. It can be set along with the CICD to make sure our code don't throw any unexpected error when we deploy the changes.
+
+Advantages of Jest:
+Jest is 2x to 3x times faster than Karma. When used in CICD, it helps deployment faster.
+Jest needs less configuration than Karma.
+Jest don't require a browser to run.
+Auto detection of code changes is possible with Jest.
+Install:
+Execute the following commands.
+
+Command Prompt
+npm uninstall karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter
+rm karma.conf.js
+npm install jest jest-preset-angular @types/jest --save-dev
+Remove test target in the angular.json file (say, projects.<app-name>.architect.test)
+
+Configure Jest
+Add the following scripts to the jest.config.js file.
+
+jest.config.js
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
+ 
+module.exports = {
+  preset: 'jest-preset-angular',
+  roots: ['<rootDir>/src/'],
+  testMatch: ['**/+(*.)+(spec).+(ts)'],
+  setupFilesAfterEnv: ['<rootDir>/src/test.ts'],
+  collectCoverage: true,
+  coverageReporters: ['html'],
+  coverageDirectory: 'coverage/my-app',
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
+    prefix: '<rootDir>/src/'
+  })
+};
+
+
+Replace the existing scripts with the following content in the src/test.ts file.
+
+src/test.ts
+import 'jest-preset-angular';
+ 
+Object.defineProperty(window, 'CSS', {value: null});
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => {
+    return {
+      display: 'none',
+      appearance: ['-webkit-appearance']
+    };
+  }
+});
+ 
+Object.defineProperty(document, 'doctype', {
+  value: '<!DOCTYPE html>'
+});
+Object.defineProperty(document.body.style, 'transform', {
+  value: () => {
+    return {
+      enumerable: true,
+      configurable: true
+    };
+  }
+});
+
+
+Update the following scripts to the tsconfig.spec.ts file.
+
+tsconfig.spec.ts
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jest", // notable change
+      "node"
+    ],
+    "esModuleInterop": true, // notable change
+    "emitDecoratorMetadata": true // notable change
+  },
+  "files": [
+    "src/test.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}
+Update the angular.json with the line for the spec file.
+
+angular.json
+"tsConfig": [
+    ...
+    "src/tsconfig.app.json",
+    "tsconfig.spec.json",
+]
+Update the package.json with the Jest scripts.
+
+package.json
+"scripts": {
+    ...
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+}
+Run:
+Run the test using Jest.
+
+Command Prompt
+npm run test
+Make sure the paths where you place the files are in sync with the paths mentioned in the config files.
