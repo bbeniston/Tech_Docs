@@ -1,0 +1,39 @@
+This article shows how to install Cypress and remove Protractor in Angular.
+
+Cypress is a frontend testing tool built for end to end tests. The test scripts can be executed and it runs the tests like a real QA professional. The code looks more or less like a Javascript. We can execute the Cypress tests as a separate project. It can be executed along with the CICD. It can be configured with the modern Frontend frameworks.
+
+Why?
+Gives a feeling of a real user testing.
+Easy to debug.
+Auto reload.
+Less configuration.
+Saves tons of time.
+Clean syntax.
+Install:
+Install the following commands (you would be asked if you want to remove Protractor)
+
+Command Prompt
+npm install -g @briebug/cypress-schematic
+npm run ng add @briebug/cypress-schematic
+Update the package.json
+Add the Cypress scripts to the package.json file.
+
+package.json
+"scripts": {
+    ...
+    "e2e": "cypress open",
+    "e2e:ci": "cypress run",
+}
+Run:
+You may add the initial test scripts to cypress\integration\spec.ts
+
+Then run the Angular project and Cypress.
+
+Command Prompt
+npm run ng serve
+npm run e2e
+You would have noticed changes in the following files:
+
+package.json
+cypress.json (new file)
+angular.json
