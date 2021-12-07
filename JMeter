@@ -67,3 +67,18 @@ Results file = Any csv file generated through listeners (as mentioned above: "pa
 user.properties file = reportgenerator.properties (in bin folder)
 Output directory = Any empty directory
 Once the Html Report is generated successfully, open the index.html file in a browser.
+
+
+
+Record Tests (optional):
+
+We can record tests in Jmeter as we manually test the application.
+
+Right Click "Test Plan" → "Non-Test Elements" → "Http(s) Test Script Recorder"
+Set Target Controller to "Http(s) Test Script Recorder"
+Set port as 8888
+Go to the proxy settings of the system and set the proxy server address as "localhost" and port as 8888 (same port as set in Jmeter)
+Click "start" (Accept the certificate)
+Browse the application in the browser (Accept to proceed)
+We can see that the Http Requests are getting recorded in Jmeter
+Copy the needed requests and paste it inside the thread group to add it to our test flow.
