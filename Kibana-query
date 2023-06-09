@@ -1,0 +1,33 @@
+{
+
+  "query": {
+
+    "bool": {
+
+      "must": [         
+
+        { "match":  { "message": "DocumentUploaded" }},
+
+        { "match":  { "message": "ReceiveQueueMessage" }},
+
+        { "match":  { "message": { "query": "7d92d9c8-4c90-4761-a677-9e5fa80a715c", "operator" : "and" } }}
+
+      ],
+
+      "filter": [
+
+        { "term":  { "environment": "dv1" }},
+
+        { "term":  { "@version": "1" }},
+
+        { "term":  { "product": "idsfunction" }},
+
+        { "range": { "@timestamp": { "gte": "2021-11-23" }}}
+
+      ]
+
+    }
+
+  }
+
+}
